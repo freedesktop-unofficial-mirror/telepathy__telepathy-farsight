@@ -178,11 +178,6 @@ tp_stream_engine_stream_dispose (GObject *object)
   TpStreamEngineStream *stream = TP_STREAM_ENGINE_STREAM (object);
   TpStreamEngineStreamPrivate *priv = STREAM_PRIVATE (stream);
 
-#ifdef MAEMO_OSSO_SUPPORT
-  if (priv->media_server_proxy)
-    media_server_proxy_cleanup (stream);
-#endif
-
   if (priv->channel_path)
     {
       g_free (priv->channel_path);
@@ -241,6 +236,12 @@ tp_stream_engine_stream_dispose (GObject *object)
       g_object_unref (priv->fs_stream);
       priv->fs_stream = NULL;
     }
+
+
+#ifdef MAEMO_OSSO_SUPPORT
+  if (priv->media_server_proxy)
+    media_server_proxy_cleanup (stream);
+#endif
 
   if (priv->output_window_id)
     {
