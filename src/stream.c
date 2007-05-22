@@ -1515,7 +1515,8 @@ tp_stream_engine_stream_set_output_window (
     {
       DEBUG (stream, "using xvimagesink");
       sink = gst_element_factory_make ("xvimagesink", NULL);
-      g_object_set (sink, "sync", FALSE, NULL);
+      g_object_set (G_OBJECT (sink), "sync", FALSE, NULL);
+      g_object_set (G_OBJECT (sink), "qos", FALSE, NULL);
     }
 
   tp_stream_engine_add_output_window (engine, stream, sink, window_id);

@@ -305,6 +305,7 @@ _add_preview_window (TpStreamEngine *obj, guint window_id, GError **error)
       g_debug ("using xvimagesink");
       sink = gst_element_factory_make ("xvimagesink", NULL);
       g_object_set (G_OBJECT (sink), "sync", FALSE, NULL);
+      g_object_set (G_OBJECT (sink), "qos", FALSE, NULL);
     }
 
   wp->created = TRUE;
