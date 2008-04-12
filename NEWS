@@ -1,3 +1,14 @@
+telepathy-stream-engine 0.5.1 (2008-04-11)
+==========================================
+
+* Add support for holding calls, so Farsight frees the resources used by
+  the call.
+* Refactor stream class into separate audio and video subclasses.
+* Add support for dumping a dotty graph of the pipeline on SIGUSR1.
+* Add --enable-coverage to build with coverage support.
+* Raise telepathy-glib dependency to 0.7.6 for hold support.
+* Raise Farsight dependency to 0.1.27 for working hold.
+
 telepathy-stream-engine 0.5.0 (2008-04-04)
 ==========================================
 
