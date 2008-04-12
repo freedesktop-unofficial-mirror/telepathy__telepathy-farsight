@@ -1340,18 +1340,28 @@ set_nat_properties (TpStreamEngineStream *self)
 static void
 prepare_transports (TpStreamEngineStream *self)
 {
-  GPtrArray *codecs;
+  const GList *fscodecs;
 
   farsight_stream_prepare_transports (self->fs_stream);
 
-  codecs = fs_codecs_to_tp (self,
-      farsight_stream_get_local_codecs (self->fs_stream));
+  fscodecs = farsight_stream_get_local_codecs (self->fs_stream);
 
-  DEBUG (self, "calling MediaStreamHandler::Ready");
+  if (fscodecs == NULL)
+    {
+      tp_stream_engine_stream_error (self, 0, "No codecs available");
+    }
+  else
+    {
+      GPtrArray *codecs;
 
-  tp_cli_media_stream_handler_call_ready (self->priv->stream_handler_proxy,
-      -1, codecs, async_method_callback, "Media.StreamHandler::Ready",
-      NULL, (GObject *) self);
+      codecs = fs_codecs_to_tp (self, fscodecs);
+
+      DEBUG (self, "calling MediaStreamHandler::Ready");
+
+      tp_cli_media_stream_handler_call_ready (self->priv->stream_handler_proxy,
+          -1, codecs, async_method_callback, "Media.StreamHandler::Ready",
+          NULL, (GObject *) self);
+    }
 }
 
 static void
