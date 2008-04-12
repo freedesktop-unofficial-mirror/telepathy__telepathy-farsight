@@ -1,3 +1,13 @@
+telepathy-stream-engine 0.5.2 (2008-04-12)
+==========================================
+
+The "don't spend your Friday evenings in the office drinking beer and making
+releases" release. Brought to you from Boston Logan International airport.
+
+* Fix duplicated "linked" signal in stream base class which was preventing the
+  real "linked" signal from being emitted, breaking video sending.
+* Cancel a stream with an error if no suitable codecs are found.
+
 telepathy-stream-engine 0.5.1 (2008-04-11)
 ==========================================
 
