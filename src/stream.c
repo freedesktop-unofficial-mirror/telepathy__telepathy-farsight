@@ -75,7 +75,6 @@ enum
   ERROR,
   STATE_CHANGED,
   RECEIVING,
-  LINKED,
   REQUEST_RESOURCE,
   FREE_RESOURCE,
   SIGNAL_COUNT
@@ -577,15 +576,6 @@ tp_stream_engine_stream_class_init (TpStreamEngineStreamClass *klass)
                   NULL, NULL,
                   g_cclosure_marshal_VOID__BOOLEAN,
                   G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
-
-  signals[LINKED] =
-    g_signal_new ("linked",
-                  G_OBJECT_CLASS_TYPE (klass),
-                  G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
-                  0,
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__VOID,
-                  G_TYPE_NONE, 0);
 
   signals[REQUEST_RESOURCE] =
     g_signal_new ("request-resource",
