@@ -170,7 +170,7 @@ dump_dot_file(gpointer data)
   GstElement *pipeline = NULL;
 
   if (engine)
-    tp_stream_engine_get_pipeline (engine);
+    pipeline = tp_stream_engine_get_pipeline (engine);
 
   if (pipeline)
     GST_DEBUG_BIN_TO_DOT_FILE_WITH_TS (GST_BIN (pipeline),
