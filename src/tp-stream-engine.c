@@ -896,6 +896,7 @@ stream_request_resource (TpStreamEngineStream *stream, gpointer user_data)
     {
       if (engine->priv->audio_resource_owner != NULL)
         {
+          g_assert (engine->priv->audio_resource_owner != stream);
           return FALSE;
         }
 
