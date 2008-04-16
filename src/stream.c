@@ -173,8 +173,6 @@ tp_stream_engine_stream_init (TpStreamEngineStream *self)
       TP_STREAM_ENGINE_TYPE_STREAM, TpStreamEngineStreamPrivate);
 
   self->priv = priv;
-  priv->playing = FALSE;
-  priv->has_resource = FALSE;
 }
 
 static void
