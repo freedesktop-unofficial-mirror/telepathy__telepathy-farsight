@@ -70,6 +70,9 @@ tp_stream_engine_error (TpStreamEngine *self,
 TpStreamEngine *
 tp_stream_engine_get (void);
 
+GPtrArray *
+tp_stream_engine_get_channels (TpStreamEngine *self);
+
 GstElement *
 tp_stream_engine_make_video_sink (TpStreamEngine *obj,
                                   gboolean is_preview);

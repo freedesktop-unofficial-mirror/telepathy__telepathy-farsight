@@ -45,6 +45,7 @@
 #include <telepathy-glib/errors.h>
 
 #include "tp-stream-engine.h"
+#include "channel.h"
 
 GSource *timeout = NULL;
 GMainLoop *mainloop = NULL;
@@ -163,18 +164,43 @@ dsp_crashed (gpointer dummy)
 }
 #endif
 
+static void
+stream_engine_channel_dump_stream (TpStreamEngineChannel *chan,
+    guint stream_id, TpStreamEngineStream *stream, gpointer _user_data)
+{
+  GstElement *pipeline = NULL;
+  gchar *name;
+
+  pipeline = farsight_stream_get_pipeline (stream->fs_stream);
+
+  if (pipeline == NULL)
+    return;
+
+  name = g_strdup_printf("%s-channel-%p-%s",
+    TP_STREAM_ENGINE_IS_VIDEO_STREAM(stream) ? "video" : "audio", chan,
+    GST_OBJECT_NAME(pipeline));
+
+  GST_DEBUG_BIN_TO_DOT_FILE_WITH_TS (GST_BIN (pipeline),
+    GST_DEBUG_GRAPH_SHOW_ALL, name);
+
+  g_free (name);
+}
+
 static gboolean
-dump_dot_file(gpointer data)
+dump_dot_files(gpointer data)
 {
   TpStreamEngine *engine = tp_stream_engine_get ();
-  GstElement *pipeline = NULL;
+  GPtrArray *channels;
+  guint i;
 
-  if (engine)
-    pipeline = tp_stream_engine_get_pipeline (engine);
-
-  if (pipeline)
-    GST_DEBUG_BIN_TO_DOT_FILE_WITH_TS (GST_BIN (pipeline),
-        GST_DEBUG_GRAPH_SHOW_ALL, "stream-engine-pipeline");
+  channels = tp_stream_engine_get_channels (engine);
+  for (i = 0; i < channels->len; i++)
+    {
+      tp_stream_engine_channel_foreach_stream (
+        TP_STREAM_ENGINE_CHANNEL(g_ptr_array_index (channels, i)),
+        stream_engine_channel_dump_stream,
+        NULL);
+    }
 
   return FALSE;
 }
@@ -182,7 +208,7 @@ dump_dot_file(gpointer data)
 static void
 got_sigusr1 (int i G_GNUC_UNUSED)
 {
-  g_idle_add (dump_dot_file, NULL);
+  g_idle_add (dump_dot_files, NULL);
 }
 
 static void

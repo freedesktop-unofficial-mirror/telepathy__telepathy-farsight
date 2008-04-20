@@ -1698,6 +1698,16 @@ tp_stream_engine_get_pipeline (TpStreamEngine *self)
   return self->priv->pipeline;
 }
 
+/*
+ * tp_stream_engine_get_channels
+ *
+ * Return the current list of TpStreamEngineChannels
+ */
+GPtrArray *
+tp_stream_engine_get_channels (TpStreamEngine *self)
+{
+  return self->priv->channels;
+}
 
 static gboolean
 _remove_defunct_sinks_idle_cb (WindowPair *wp)
