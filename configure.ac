@@ -114,16 +114,19 @@ PKG_CHECK_MODULES(FARSIGHT, [farsight-0.1 >= 0.1.27])
 AC_SUBST(FARSIGHT_CFLAGS)
 AC_SUBST(FARSIGHT_LIBS)
 
-dnl Check for gstreamer
-PKG_CHECK_MODULES(GST,
-  [gstreamer-0.10 >= 0.10.16, gstreamer-interfaces-0.10 >= 0.10.16])
+# Check for GStreamer core library
+PKG_CHECK_MODULES(GST, [gstreamer-0.10 >= 0.10.16])
 AC_SUBST(GST_CFLAGS)
 AC_SUBST(GST_LIBS)
 
-dnl Check for gst-plugins-base
+# Check for gst-plugins-base (its CFLAGS and LIBS aren't very meaningful,
+# but if we don't have it, we want to say gstreamer-plugins-base
+# rather than gstreamer-interfaces in the error message to the user)
 PKG_CHECK_MODULES(GST_PLUGINS_BASE, [gstreamer-plugins-base-0.10])
-AC_SUBST(GST_PLUGINS_BASE_CFLAGS)
-AC_SUBST(GST_PLUGINS_BASE_LIBS)
+# OK, if we had that, we ought to also have gstreamer-interfaces
+PKG_CHECK_MODULES(GST_INTERFACES, [gstreamer-interfaces-0.10])
+AC_SUBST(GST_INTERFACES_CFLAGS)
+AC_SUBST(GST_INTERFACES_LIBS)
 
 dnl libx11
 PKG_CHECK_MODULES(X11, [x11])

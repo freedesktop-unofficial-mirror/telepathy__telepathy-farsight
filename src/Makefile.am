@@ -41,8 +41,8 @@ AM_CFLAGS = \
 	$(GLIB_CFLAGS) \
 	$(DBUS_CFLAGS) \
 	$(X11_CFLAGS) \
-	$(GST_PLUGINS_BASE_CFLAGS) \
 	$(GST_CFLAGS) \
+	$(GST_INTERFACES_CFLAGS) \
 	$(FARSIGHT_CFLAGS) \
 	$(TELEPATHY_CFLAGS) \
 	-I$(top_srcdir) \
@@ -52,8 +52,8 @@ libstreamengine_convenience_la_LIBADD = \
 	$(GLIB_LIBS) \
 	$(DBUS_LIBS) \
 	$(X11_LIBS) \
-	$(GST_PLUGINS_BASE_LIBS) \
 	$(GST_LIBS) \
+	$(GST_INTERFACES_LIBS) \
 	$(TELEPATHY_LIBS) \
 	$(FARSIGHT_LIBS) \
 	$(top_builddir)/api/libstream-engine-api.la
