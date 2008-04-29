@@ -84,7 +84,7 @@ dnl options for building sequence diagrams
 SEQ_DIAS
 
 dnl Check for Glib
-PKG_CHECK_MODULES(GLIB, gobject-2.0 >= 2.4)
+PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.10, gobject-2.0 >= 2.10])
 
 GLIB_GENMARSHAL=`$PKG_CONFIG --variable=glib_genmarshal glib-2.0`
 AC_SUBST(GLIB_CFLAGS)
@@ -92,7 +92,7 @@ AC_SUBST(GLIB_LIBS)
 AC_SUBST(GLIB_GENMARSHAL)
 
 dnl Check for DBus
-PKG_CHECK_MODULES(DBUS, [dbus-1 >= 0.60, dbus-glib-1 >= 0.60])
+PKG_CHECK_MODULES(DBUS, [dbus-1 >= 0.95, dbus-glib-1 >= 0.73])
 
 AC_SUBST(DBUS_CFLAGS)
 AC_SUBST(DBUS_LIBS)
