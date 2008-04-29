@@ -114,6 +114,12 @@ PKG_CHECK_MODULES(FARSIGHT, [farsight-0.1 >= 0.1.27])
 AC_SUBST(FARSIGHT_CFLAGS)
 AC_SUBST(FARSIGHT_LIBS)
 
+dnl Check for gstreamer
+PKG_CHECK_MODULES(GST,
+  [gstreamer-0.10 >= 0.10.16, gstreamer-interfaces-0.10 >= 0.10.16])
+AC_SUBST(GST_CFLAGS)
+AC_SUBST(GST_LIBS)
+
 dnl Check for gst-plugins-base
 PKG_CHECK_MODULES(GST_PLUGINS_BASE, [gstreamer-plugins-base-0.10])
 AC_SUBST(GST_PLUGINS_BASE_CFLAGS)
