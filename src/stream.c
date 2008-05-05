@@ -1112,7 +1112,7 @@ set_stream_playing (TpMediaStreamHandler *proxy G_GNUC_UNUSED,
 
   DEBUG (self, "%d", play);
 
-  if (play)
+  if (play && !self->priv->playing)
     {
       if (self->priv->playing)
         return;
@@ -1132,7 +1132,7 @@ set_stream_playing (TpMediaStreamHandler *proxy G_GNUC_UNUSED,
           tp_stream_engine_stream_error (self, 0, "Resource Unavailable");
         }
     }
-  else if (self->priv->playing)
+  else if (!play && self->priv->playing)
     {
       stop_stream (self);
 
@@ -1173,7 +1173,7 @@ set_stream_held (TpMediaStreamHandler *proxy G_GNUC_UNUSED,
 
   DEBUG (self, "Holding : %d", held);
 
-  if (held)
+  if (held && !farsight_stream_is_held (self->fs_stream))
     {
       g_assert (self->priv->has_resource);
 
@@ -1200,7 +1200,7 @@ set_stream_held (TpMediaStreamHandler *proxy G_GNUC_UNUSED,
           self->priv->has_resource = FALSE;
         }
     }
-  else
+  else if(!held && farsight_stream_is_held (self->fs_stream))
     {
       g_assert (!self->priv->has_resource);
 
