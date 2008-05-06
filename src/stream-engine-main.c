@@ -164,6 +164,8 @@ dsp_crashed (gpointer dummy)
 }
 #endif
 
+#ifdef GST_DEBUG_BIN_TO_DOT_FILE_WITH_TS
+
 static void
 stream_engine_channel_dump_stream (TpStreamEngineChannel *chan,
     guint stream_id, TpStreamEngineStream *stream, gpointer _user_data)
@@ -210,6 +212,8 @@ got_sigusr1 (int i G_GNUC_UNUSED)
 {
   g_idle_add (dump_dot_files, NULL);
 }
+
+#endif
 
 static void
 got_sigbus (int i G_GNUC_UNUSED)
@@ -258,7 +262,10 @@ int main(int argc, char **argv)
     g_log_set_default_handler (tp_debug_timestamped_log_handler, NULL);
 
   signal (SIGBUS, got_sigbus);
+
+#ifdef GST_DEBUG_BIN_TO_DOT_FILE_WITH_TS
   signal (SIGUSR1, got_sigusr1);
+#endif
 
 #ifdef USE_REALTIME
   {
