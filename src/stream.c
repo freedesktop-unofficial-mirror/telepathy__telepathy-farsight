@@ -1084,6 +1084,8 @@ stop_stream (TpStreamEngineStream *self)
 
   if (klass->stop_stream)
     klass->stop_stream (self);
+
+  self->priv->playing = FALSE;
 }
 
 static void
@@ -1114,7 +1116,6 @@ set_stream_playing (TpMediaStreamHandler *proxy G_GNUC_UNUSED,
 
   if (play && !self->priv->playing)
     {
-
       g_assert (!self->priv->has_resource);
 
       g_signal_emit (self, signals[REQUEST_RESOURCE], 0, &resource_available);
@@ -1198,7 +1199,6 @@ set_stream_held (TpMediaStreamHandler *proxy G_GNUC_UNUSED,
     }
   else if(!held && !self->priv->has_resource)
     {
-
       g_signal_emit (self, signals[REQUEST_RESOURCE], 0, &resource_available);
       /* Make sure we have access to the resource */
       if (resource_available)
