@@ -116,7 +116,7 @@ AC_SUBST(FARSIGHT_LIBS)
 
 dnl Check for gstreamer
 PKG_CHECK_MODULES(GST,
-  [gstreamer-0.10 >= 0.10.16, gstreamer-interfaces-0.10 >= 0.10.16])
+  [gstreamer-0.10 >= 0.10.13])
 AC_SUBST(GST_CFLAGS)
 AC_SUBST(GST_LIBS)
 
