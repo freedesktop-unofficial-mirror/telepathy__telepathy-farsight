@@ -120,10 +120,14 @@ PKG_CHECK_MODULES(GST,
 AC_SUBST(GST_CFLAGS)
 AC_SUBST(GST_LIBS)
 
-dnl Check for gst-plugins-base
-PKG_CHECK_MODULES(GST_PLUGINS_BASE, [gstreamer-plugins-base-0.10])
-AC_SUBST(GST_PLUGINS_BASE_CFLAGS)
-AC_SUBST(GST_PLUGINS_BASE_LIBS)
+dnl Check for gst-interfaces or gst-plugins-base
+PKG_CHECK_MODULES(GST_INTERFACES, [gstreamer-interfaces-0.10],[],
+	PKG_CHECK_MODULES(GST_INTERFACES, [gstreamer-plugins-base-0.10],
+	GST_INTERFACES_LIBS = ${GST_INTERFACES_LIBS} -lgstinterfaces-0.10,
+	AC_MSG_ERROR([gst-plugins-base-0.10 is required])))
+
+AC_SUBST(GST_INTERFACES_CFLAGS)
+AC_SUBST(GST_INTERFACES_LIBS)
 
 dnl libx11
 PKG_CHECK_MODULES(X11, [x11])
