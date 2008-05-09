@@ -1,3 +1,16 @@
+telepathy-stream-engine 0.5.3 (2008-05-09)
+==========================================
+
+The "your call is very important to us, please hold" release. Brought to you in
+part from the Severn Tunnel (Twnnel Hafren).
+
+* Guard against CMs emitting SetPlaying and SetHeld redundantly, avoiding
+  them triggering resource locking bugs.
+* SIGUSR1 now dumps all of the pipelines (audio and video) rather than just
+  video.
+* Fix build problems with GStreamer < 0.10.16 by conditionally compiling the
+  code that dumps the GStreamer pipeling on SIGUSR1.
+
 telepathy-stream-engine 0.5.2 (2008-04-12)
 ==========================================
 
