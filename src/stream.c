@@ -1084,8 +1084,6 @@ stop_stream (TpStreamEngineStream *self)
 
   if (klass->stop_stream)
     klass->stop_stream (self);
-
-  self->priv->playing = FALSE;
 }
 
 static void
@@ -1099,6 +1097,8 @@ stop_stream_real (TpStreamEngineStream *self)
   farsight_stream_stop (self->fs_stream);
 
   farsight_stream_set_source (self->fs_stream, NULL);
+
+  self->priv->playing = FALSE;
 }
 
 static void
