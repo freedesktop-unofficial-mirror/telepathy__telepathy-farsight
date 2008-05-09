@@ -1114,8 +1114,14 @@ set_stream_playing (TpMediaStreamHandler *proxy G_GNUC_UNUSED,
 
   DEBUG (self, "%d", play);
 
-  if (play && !self->priv->playing)
+  if (play)
     {
+      if (self->priv->playing)
+        {
+          DEBUG (self, "ignoring request to play, we're already playing");
+          return;
+        }
+
       g_assert (!self->priv->has_resource);
 
       g_signal_emit (self, signals[REQUEST_RESOURCE], 0, &resource_available);
@@ -1131,8 +1137,14 @@ set_stream_playing (TpMediaStreamHandler *proxy G_GNUC_UNUSED,
           tp_stream_engine_stream_error (self, 0, "Resource Unavailable");
         }
     }
-  else if (!play && self->priv->playing)
+  else
     {
+      if (!self->priv->playing)
+        {
+          DEBUG (self, "ignoring request to stop, we're already stopped");
+          return;
+        }
+
       stop_stream (self);
 
       if (self->priv->has_resource)
