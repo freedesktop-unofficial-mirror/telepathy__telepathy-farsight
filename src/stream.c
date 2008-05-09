@@ -1172,8 +1172,15 @@ set_stream_held (TpMediaStreamHandler *proxy G_GNUC_UNUSED,
 
   DEBUG (self, "Holding : %d", held);
 
-  if (held && self->priv->has_resource)
+  if (held)
     {
+      if (!self->priv->has_resource)
+        {
+          DEBUG (self, "ignoring request to hold, we've not currently got the "
+              "resource");
+          return;
+        }
+
       /* Hold the stream */
       if (farsight_stream_hold (self->fs_stream))
         {
@@ -1197,8 +1204,15 @@ set_stream_held (TpMediaStreamHandler *proxy G_GNUC_UNUSED,
           self->priv->has_resource = FALSE;
         }
     }
-  else if(!held && !self->priv->has_resource)
+  else
     {
+      if (self->priv->has_resource)
+        {
+          DEBUG (self, "ignoring request to unhold, we've currently got the "
+              "resource");
+          return;
+        }
+
       g_signal_emit (self, signals[REQUEST_RESOURCE], 0, &resource_available);
       /* Make sure we have access to the resource */
       if (resource_available)
