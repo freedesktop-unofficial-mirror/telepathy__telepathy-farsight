@@ -2122,6 +2122,8 @@ start_named_telephony_event (TpMediaStreamHandler *proxy,
       "codecs", &codecs,
       NULL);
 
+  if (send_codec == NULL)
+    goto out;
 
   if (check_codecs_for_telephone_event (self, &codecs, send_codec, codecid))
     {
@@ -2151,6 +2153,8 @@ start_named_telephony_event (TpMediaStreamHandler *proxy,
       dtmfevent->event_id = event;
       g_queue_push_tail (&self->priv->events_to_send, dtmfevent);
     }
+
+out:
 
   fs_codec_destroy (send_codec);
   fs_codec_list_destroy (codecs);
